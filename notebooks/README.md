@@ -4,7 +4,12 @@
 
 * Python 3.8 or higher
 * Essential Python packages in `requirements.txt`
-  * 
+  * [geopandas](https://geopandas.org/)
+  * [numpy](https://numpy.org/)
+  * [matplotlib](https://matplotlib.org/)
+  * [pandas](https://pandas.pydata.org/)
+  * [scipy](https://scipy.org/)
+  * [sodapy](https://github.com/xmunoz/sodapy)
 * Jupyter Notebooks or Jupyter Lab
   * [Installing Jupyter](https://jupyter.org/install)
 
@@ -17,13 +22,13 @@ $ python3 --version
 ```
 In case you do not have a version of Python installed, you can do it following in this way:
 
-**Linux**
+Linux
 ```console
 $ sudo apt-get update 
 $ sudo apt-get install python3
 ```
 
-**MacOS**
+MacOS
 ```console
 $ brew install python3
 ```
@@ -49,12 +54,12 @@ $ virtualenv –-version
 
 In case the library is not installed in your systems:
 
-**Linux**
+Linux
 ```console
 $ sudo apt-get install python3-venv 
 ```
 
-**MacOS**
+MacOS
 ```console
 $ python3 -m pip install --user virtualenv
 ```
