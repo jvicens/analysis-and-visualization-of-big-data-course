@@ -1,0 +1,9 @@
+jupyter==1.0.0
+numpy==1.26.1
+matplotlib==3.8.0
+pandas==2.1.2
+pandas-bokeh==0.5.5
+geopandas==0.14.0
+openpyxl==3.1.2
+scipy==1.11.3
+sodapy==2.2.0
