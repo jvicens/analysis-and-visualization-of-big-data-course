@@ -1,6 +1,15 @@
 # Notebooks
 
-## Software requirements
+## Table of Contents
+1. [Software requirements](#software-requirements)
+2. [Setting up your working environment](#setting-up-your-working-environment-a-namesea)
+   1. [Install Python and pip](#1-install-python-and-pip3)
+   3. [Create a virtual environment](#2-create-a-virtual-environment)
+      1. [virtualenv](#21-virtualenv)
+      2. [conda](#22-conda)
+4. [Comments](#comments)
+
+## Software requirements 
 
 * Python 3.8 or higher
 * Essential Python packages in `requirements.txt`
@@ -13,9 +22,9 @@
 * Jupyter Notebooks or Jupyter Lab
   * [Installing Jupyter](https://jupyter.org/install)
 
-## Setting up your working environment
+## Setting up your working environment 
 
-### 1. Install Python and pip3
+### Install Python and pip3
 Check Python version installed:
 ```console
 $ python3 --version
@@ -44,7 +53,8 @@ $ sudo apt-get install python3-pip
 $ sudo apt-get update 
 ```
 
-### 2. Create a Virtual Environment
+### Create a Virtual Environment
+#### virtualenv
 
 Check if `virtualenv` is installed:
 
@@ -88,7 +98,9 @@ Create a Kernel for Jupyter Notebooks
 $ ipython kernel install --name <name_kernel> --user
 ```
 
-#### Comments
+#### Conda
+
+### Comments
 
 - With `virtualenv` you can create and independent virtual environment: `mkvirtualenv <name_virtual_environment>`
 - List all virtual environments installed: `lsvirtualenv -b`
