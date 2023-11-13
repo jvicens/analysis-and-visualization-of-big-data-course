@@ -12,6 +12,13 @@ Instructors: Josep Perelló and [Julian Vicens](jvicens.github.io)
 * :clipboard: [Slides](slides/README.md) (*under construction*)
 * :file_folder: [Datasets](data/README.md)
 
+
+## Repositories
+### Course 2023/2024
+- https://github.com/JuliaAT/AVDM-project
+- https://github.com/Ronoh97/AAVV_JaraySedal
+- https://github.com/belenmvinhas/AVDM_ioib
+
 ## Acknowledgments
 
 These materials are based on those developed by [Franziska Peter](https://github.com/Chaotique) and Josep Perelló for 

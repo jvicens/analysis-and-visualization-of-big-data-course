@@ -3,10 +3,10 @@
 ## Table of Contents
 1. [Software requirements](#software-requirements)
 2. [Setting up your working environment](#setting-up-your-working-environment-a-namesea)
-   1. [Install Python and pip](#1-install-python-and-pip3)
-   3. [Create a virtual environment](#2-create-a-virtual-environment)
-      1. [virtualenv](#21-virtualenv)
-      2. [conda](#22-conda)
+   1. [Install Python and pip](#install-python-and-pip3)
+   3. [Create a virtual environment](#create-a-virtual-environment)
+      1. [virtualenv](#virtualenv)
+      2. [conda](#conda)
 4. [Comments](#comments)
 
 ## Software requirements 
