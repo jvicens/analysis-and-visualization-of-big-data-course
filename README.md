@@ -18,6 +18,7 @@ Instructors: Josep Perelló and [Julian Vicens](jvicens.github.io)
 - https://github.com/JuliaAT/AVDM-project
 - https://github.com/Ronoh97/AAVV_JaraySedal
 - https://github.com/belenmvinhas/AVDM_ioib
+- https://github.com/gomgoma/2023-BigDataVisualization
 
 ## Acknowledgments
 
