@@ -27,30 +27,30 @@
 ### Install Python and pip3
 Check Python version installed:
 ```console
-$ python3 --version
+python3 --version
 ```
 In case you do not have a version of Python installed, you can do it following in this way:
 
 Linux
 ```console
-$ sudo apt-get update 
-$ sudo apt-get install python3
+sudo apt-get update 
+sudo apt-get install python3
 ```
 
 MacOS
 ```console
-$ brew install python3
+brew install python3
 ```
 
 Check pip3 is installed:
 ```console
-$ command -v pip3
+command -v pip3
 ```
 
 In principle is MacOS pip3 is installed by default with Python, in Linux you need to install it manually:
 ```console
-$ sudo apt-get install python3-pip
-$ sudo apt-get update 
+sudo apt-get install python3-pip
+sudo apt-get update 
 ```
 
 ### Create a Virtual Environment
@@ -62,19 +62,19 @@ Then can install the appropriated libraries by using the file requirements.txt c
 Check if `virtualenv` is installed:
 
 ```console
-$ virtualenv –-version
+virtualenv –-version
 ```
 
 In case the library is not installed in your systems:
 
 Linux
 ```console
-$ sudo apt-get install python3-venv 
+sudo apt-get install python3-venv 
 ```
 
 MacOS
 ```console
-$ python3 -m pip install --user virtualenv
+python3 -m pip install --user virtualenv
 ```
 
 #### Setting up your virtual environment
@@ -82,23 +82,23 @@ $ python3 -m pip install --user virtualenv
 Via terminal move to the root directory in your repository and create the environment:
 
 ```console
-$ python3 -m venv <name_virtual_environment>
+python3 -m venv <name_virtual_environment>
 ```
 It creates the venv in the root of your repository. This venv has to be added into `.gitignore` file to avoid commit the
 environment.
 
 ```console
-$ source <name_virtual_environment>/bin/activate
+source <name_virtual_environment>/bin/activate
 ```
 
 Install the requirements, running the following command: 
 ```console
-$ pip3 install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 Create a Kernel for Jupyter Notebooks
 ```
-$ ipython kernel install --name <name_kernel> --user
+ipython kernel install --name <name_kernel> --user
 ```
 
 #### Conda
@@ -110,38 +110,38 @@ Before proceeding, ensure you have the following installed:
 
 Check if Conda is installed. This should display the Conda version installed on your system:
 ```bash
-$ conda --version
+conda --version
 ```
 Once Conda is installed you can create a new conda environment.
 ```
-$ conda create --name <name_virtual_environment> python=3.8
+conda create --name <name_virtual_environment> python=3.8
 ```
 Once the environment is created you can activate it using:
 ```
-$ conda activate <name_virtual_environment>
+conda activate <name_virtual_environment>
 ```
 To deactivate the environment later you can run:
 ```
-$ conda deactivate
+conda deactivate
 ```
 Install the requirements:
 ```console
-$ conda install --file requirements.txt
+conda install --file requirements.txt
 ```
 
 Create a Kernel for Jupyter Notebooks
 ```
-$ ipython kernel install --name <name_kernel> --user
+ipython kernel install --name <name_kernel> --user
 ```
 Run the following command to install the dependencies listed in the requirements.txt file:
 ```
-$ conda install --file requirements.txt
+conda install --file requirements.txt
 ```
 
 In the exceptional case that some packages are not available via Conda (i.e., they are only available via pip), you can combine both. 
 First, install what Conda can handle and then:
 ```
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 
