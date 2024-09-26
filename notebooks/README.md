@@ -7,7 +7,7 @@
    3. [Create a virtual environment](#create-a-virtual-environment)
       1. [virtualenv](#virtualenv)
       2. [conda](#conda)
-4. [Comments](#comments)
+3. [Additional Tips](#comments)
 
 ## Software requirements 
 
@@ -22,7 +22,7 @@
 * Jupyter Notebooks or Jupyter Lab
   * [Installing Jupyter](https://jupyter.org/install)
 
-## Setting up your working environment 
+## Setting up your working environment
 
 ### Install Python and pip3
 Check Python version installed:
@@ -54,6 +54,9 @@ $ sudo apt-get update
 ```
 
 ### Create a Virtual Environment
+Virtual environments ensures package dependencies don't interfere with your systems libraries or base environments.
+Then can install the appropriated libraries by using the file requirements.txt containing the Python packages to install, 
+
 #### virtualenv
 
 Check if `virtualenv` is installed:
@@ -88,7 +91,7 @@ environment.
 $ source <name_virtual_environment>/bin/activate
 ```
 
-Install the requirements:
+Install the requirements, running the following command: 
 ```console
 $ pip3 install -r requirements.txt
 ```
@@ -100,9 +103,55 @@ $ ipython kernel install --name <name_kernel> --user
 
 #### Conda
 
-### Comments
+Before proceeding, ensure you have the following installed:
+- **Anaconda** or **Miniconda** installed on your Windows / MacOs / Linux machine. You can download:
+  - [Anaconda](https://www.anaconda.com/products/individual)
+  - [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
+
+Check if Conda is installed. This should display the Conda version installed on your system:
+```bash
+$ conda --version
+```
+Once Conda is installed you can create a new conda environment.
+```
+$ conda create --name <name_virtual_environment> python=3.8
+```
+Once the environment is created you can activate it using:
+```
+$ conda activate <name_virtual_environment>
+```
+To deactivate the environment later you can run:
+```
+$ conda deactivate
+```
+Install the requirements:
+```console
+$ conda install --file requirements.txt
+```
+
+Create a Kernel for Jupyter Notebooks
+```
+$ ipython kernel install --name <name_kernel> --user
+```
+Run the following command to install the dependencies listed in the requirements.txt file:
+```
+$ conda install --file requirements.txt
+```
+
+In the exceptional case that some packages are not available via Conda (i.e., they are only available via pip), you can combine both. 
+First, install what Conda can handle and then:
+```
+$ pip install -r requirements.txt
+```
+
+
+### Additional tips
 
 - With `virtualenv` you can create and independent virtual environment: `mkvirtualenv <name_virtual_environment>`
-- List all virtual environments installed: `lsvirtualenv -b`
-- There is no way to remove a virtual environment with a command. The only way to do it is `sudo rm -rf venv`
+- List all virtual environments installed: `lsvirtualenv -b` or `conda list`
+- There is no way to remove a virtual environment with a command. The only way to do it is `sudo rm -rf <name_virtual_environment>` or in the case of conda `conda remove --name <name_virtual_environment> --all`
 - Delete a Kernel with this command: `jupyter kernelspec remove old_kernel`
+- Save the list of installed packages in an environment with: `pip freeze > requeriments.txt` or `conda env export > environment.yml`
+- Create an environment from the `environment.yml` file, use: `conda env create -f environment.yml`
+
+
