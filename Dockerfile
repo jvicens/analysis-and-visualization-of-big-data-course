@@ -33,7 +33,7 @@ EXPOSE 8888
 WORKDIR /home/jupyter
 
 # Copy all content (e.g., notebooks) to the container
-COPY ./notebooks .
+COPY . .
 
 # Remove existing Jupyter config if present (to avoid conflicts)
 RUN rm -rf ~/.jupyter

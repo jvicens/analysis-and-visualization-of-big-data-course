@@ -4,10 +4,11 @@
 1. [Software requirements](#software-requirements)
 2. [Setting up your working environment](#setting-up-your-working-environment-a-namesea)
    1. [Install Python and pip](#install-python-and-pip3)
-   3. [Create a virtual environment](#create-a-virtual-environment)
+   2. [Create a virtual environment](#create-a-virtual-environment)
       1. [virtualenv](#virtualenv)
       2. [conda](#conda)
-3. [Additional Tips](#comments)
+      3. [Additional Tips](#comments)
+   3. [Docker](#docker)
 
 ## Software requirements 
 
@@ -55,7 +56,7 @@ sudo apt-get update
 
 ### Create a Virtual Environment
 Virtual environments ensures package dependencies don't interfere with your systems libraries or base environments.
-Then can install the appropriated libraries by using the file requirements.txt containing the Python packages to install, 
+Then can install the appropriated libraries by using the file `requirements.txt containing the Python packages to install, 
 
 #### virtualenv
 
@@ -145,13 +146,28 @@ pip install -r requirements.txt
 ```
 
 
-### Additional tips
+#### Additional tips
 
 - With `virtualenv` you can create and independent virtual environment: `mkvirtualenv <name_virtual_environment>`
 - List all virtual environments installed: `lsvirtualenv -b` or `conda list`
 - There is no way to remove a virtual environment with a command. The only way to do it is `sudo rm -rf <name_virtual_environment>` or in the case of conda `conda remove --name <name_virtual_environment> --all`
 - Delete a Kernel with this command: `jupyter kernelspec remove old_kernel`
-- Save the list of installed packages in an environment with: `pip freeze > requeriments.txt` or `conda env export > environment.yml`
+- Save the list of installed packages in an environment with: `pip freeze > requirements.txt` or `conda env export > environment.yml`
 - Create an environment from the `environment.yml` file, use: `conda env create -f environment.yml`
 
+### Docker
+
+#### Build and Run the Docker Container
+
+1. Build the Docker image: In the directory where your Dockerfile is located, run:
+```
+docker build -t jupyter-venv .
+```
+2. Run the Docker container:
+```
+docker run -p 8888:8888 -v $(pwd):/home/jupyter jupyter-venv
+```
+This will map port 8888 on your host to the Jupyter notebook running in the Docker container and mount the current directory into the container’s /home/jupyter.
+
+3. Access Jupyter Notebook: Open your browser and go to: `http://localhost:8888`
 
