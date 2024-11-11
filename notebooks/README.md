@@ -115,7 +115,7 @@ conda --version
 ```
 Once Conda is installed you can create a new conda environment.
 ```
-conda create --name <name_virtual_environment> python=3.8
+conda create --name <name_virtual_environment> python=3.10
 ```
 Once the environment is created you can activate it using:
 ```
@@ -129,15 +129,9 @@ Install the requirements:
 ```console
 conda install --file requirements.txt
 ```
+In case some libraries are not found in Conda add new channels, specially conda-forge that contains the most recent
+scientific libraries `conda config --add channels conda-forge`
 
-Create a Kernel for Jupyter Notebooks
-```
-ipython kernel install --name <name_kernel> --user
-```
-Run the following command to install the dependencies listed in the requirements.txt file:
-```
-conda install --file requirements.txt
-```
 
 In the exceptional case that some packages are not available via Conda (i.e., they are only available via pip), you can combine both. 
 First, install what Conda can handle and then:
@@ -145,6 +139,11 @@ First, install what Conda can handle and then:
 pip install -r requirements.txt
 ```
 
+
+Once you have all the environment set up create a Kernel for Jupyter Notebooks
+```
+ipython kernel install --name <name_kernel> --user
+```
 
 #### Additional tips
 
@@ -154,6 +153,8 @@ pip install -r requirements.txt
 - Delete a Kernel with this command: `jupyter kernelspec remove old_kernel`
 - Save the list of installed packages in an environment with: `pip freeze > requirements.txt` or `conda env export > environment.yml`
 - Create an environment from the `environment.yml` file, use: `conda env create -f environment.yml`
+
+
 
 ### Docker
 
