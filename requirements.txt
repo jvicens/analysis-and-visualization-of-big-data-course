@@ -1,5 +1,5 @@
 jupyter==1.0.0
-numpy==1.26.1
+numpy==1.26.4
 matplotlib==3.8.0
 pandas==2.1.2
 pandas-bokeh==0.5.5
