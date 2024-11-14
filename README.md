@@ -19,6 +19,7 @@ Instructors: Josep Perelló and [Julian Vicens](jvicens.github.io)
 - https://github.com/bertaros/FFF
 - https://github.com/edejuan2002/avdm_Competecies
 - https://github.com/ainagaya/AVDM_pollutants
+- https://github.com/JuanCastillo29/A.V._Data
 ### Course 2023/2024
 - https://github.com/JuliaAT/AVDM-project
 - https://github.com/Ronoh97/AAVV_JaraySedal
