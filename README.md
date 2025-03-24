@@ -11,21 +11,7 @@ Instructors: Josep Perelló and [Julian Vicens](jvicens.github.io)
 * :notebook: [Notebooks](notebooks/README.md)
 * :clipboard: [Slides](slides/README.md) (*under construction*)
 * :file_folder: [Datasets](data/README.md)
-
-
-## Repositories
-### Course 2024/2025
-- https://github.com/GuifreRamos/LlenguaCatalana
-- https://github.com/bertaros/FFF
-- https://github.com/edejuan2002/avdm_Competecies
-- https://github.com/ainagaya/AVDM_pollutants
-- https://github.com/JuanCastillo29/A.V._Data
-### Course 2023/2024
-- https://github.com/JuliaAT/AVDM-project
-- https://github.com/Ronoh97/AAVV_JaraySedal
-- https://github.com/belenmvinhas/AVDM_ioib
-- https://github.com/gomgoma/2023-BigDataVisualization
-
+* :bar_chart: [Projects](projects/README.md)
 ## Acknowledgments
 
 These materials are based on those developed by [Franziska Peter](https://github.com/Chaotique) and Josep Perelló for 
