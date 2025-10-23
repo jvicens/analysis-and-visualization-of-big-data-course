@@ -1,0 +1,24 @@
+name: ub-bigdata-viz
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - jupyterlab
+  - ipykernel
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scipy
+  - openpyxl
+  - plotly
+  - geopandas
+  - fiona
+  - shapely
+  - pyproj
+  - rtree
+  - pip:
+      - ydata-profiling
+      - sodapy
+      - pandas-bokeh

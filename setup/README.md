@@ -1,4 +1,4 @@
-# Notebooks
+# Setup the working environment
 
 ## Table of Contents
 1. [Software requirements](#software-requirements)
@@ -7,8 +7,9 @@
    2. [Create a virtual environment](#create-a-virtual-environment)
       1. [virtualenv](#virtualenv)
       2. [conda](#conda)
-      3. [Additional Tips](#comments)
-   3. [Docker](#docker)
+      3. [Additional Tips](#additional-tips)
+   3. [Automated setup scripts](#Environment-setup-with-.bat-(Windows users)-and-.sh-(Linux/Mac users))
+   4. [Docker](#docker)
 
 ## Software requirements 
 
@@ -154,7 +155,35 @@ ipython kernel install --name <name_kernel> --user
 - Save the list of installed packages in an environment with: `pip freeze > requirements.txt` or `conda env export > environment.yml`
 - Create an environment from the `environment.yml` file, use: `conda env create -f environment.yml`
 
+### Environment setup with .bat (Windows users) and .sh (Linux/Mac users)
 
+The .bat file contains a series of commands written in plain text that Windows executes line by line when you 
+double-click the file or run it from the command prompt.
+
+The file `install_env.bat` automates the environment setup for students on Windows with Miniconda.
+It performs the following steps:
+
+1. Checks that conda is installed and available.
+2. Updates Conda (optional).
+3. Creates the environment named `ub-avbd` with Python 3.11.
+4. Installs all dependencies from `environment.yml`.
+5. Registers the environment as a Jupyter kernel named `Python (ub-avbd)`.
+6. Prints instructions to start Jupyter Lab:
+```
+conda activate ub-avbd
+jupyter lab
+```
+
+Same procedure is followed by Linux/Mac users but using the file `install_env.sh`.
+1. Save it in your course root
+2. Then make it executable, in case is not:
+```
+chmod +x install_env.sh
+```
+3. and run it:
+```
+./install_env.sh
+```
 
 ### Docker
 
