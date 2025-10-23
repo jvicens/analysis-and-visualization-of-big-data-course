@@ -13,7 +13,7 @@
 
 ## Software requirements 
 
-* Python 3.8 or higher
+* Python 3.11 or higher
 * Essential Python packages in `requirements.txt`
   * [geopandas](https://geopandas.org/)
   * [numpy](https://numpy.org/)
@@ -186,6 +186,8 @@ chmod +x install_env.sh
 ```
 
 ### Docker
+
+Previously install docker following the [instructions](https://docs.docker.com/engine/install/).
 
 #### Build and Run the Docker Container
 

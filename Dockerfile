@@ -1,5 +1,5 @@
 # Base image with Python and Jupyter
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 # Set environment variables
 ENV VIRTUAL_ENV=/opt/venv
@@ -8,6 +8,11 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 # Install required system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
+    gdal-bin \
+    libgdal-dev \
+    python3-gdal \
+    libgeos-dev \
+    libproj-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Create virtual environment
