@@ -8,7 +8,7 @@
       1. [virtualenv](#virtualenv)
       2. [conda](#conda)
       3. [Additional Tips](#additional-tips)
-   3. [Automated setup scripts (.bat/.sh)](#Automated Setup Scripts)
+   3. [Automated setup scripts (.bat/.sh)](#Automated-Setup-Scripts)
    4. [Docker](#docker)
 
 ## Software requirements 
