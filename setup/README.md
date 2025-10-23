@@ -8,7 +8,7 @@
       1. [virtualenv](#virtualenv)
       2. [conda](#conda)
       3. [Additional Tips](#additional-tips)
-   3. [Automated setup scripts](#Environment-setup-with-.bat-(Windows users)-and-.sh-(Linux/Mac users))
+   3. [Automated setup scripts (.bat/.sh)](#Automated Setup Scripts)
    4. [Docker](#docker)
 
 ## Software requirements 
@@ -155,7 +155,7 @@ ipython kernel install --name <name_kernel> --user
 - Save the list of installed packages in an environment with: `pip freeze > requirements.txt` or `conda env export > environment.yml`
 - Create an environment from the `environment.yml` file, use: `conda env create -f environment.yml`
 
-### Environment setup with .bat (Windows users) and .sh (Linux/Mac users)
+### Automated Setup Scripts
 
 The .bat file contains a series of commands written in plain text that Windows executes line by line when you 
 double-click the file or run it from the command prompt.
