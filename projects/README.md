@@ -2,6 +2,14 @@
 
 This repository contains links to the project repositories delivered by students from previous courses.
 
+## Course 2025/2026
+- [Medical Receipts](https://github.com/GerardArgany/AVBD_Medical_Receipts)
+- [Defibrillator](https://github.com/alexdeharo269/CatDef)
+- [Tourist Accommodations and Housing](https://github.com/CiscoBagur/Analysis-and-Visualization)
+- [Educations in Catalonia](https://github.com/m-garcia-rodriguez/Education-Big-Data-Project)
+- [Migration](https://github.com/annaszymanskicortes/truco-o-dato)
+- [Skills in Education](https://github.com/pablob2002/immigration-avdm)
+
 ## Course 2024/2025
 - [Llengua Catalana](https://github.com/GuifreRamos/LlenguaCatalana)
 - [Climate tendencies in Catalunya](https://github.com/bertaros/FFF)

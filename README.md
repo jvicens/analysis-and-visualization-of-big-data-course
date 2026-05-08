@@ -8,7 +8,7 @@ Instructors: Josep Perelló and [Julian Vicens](jvicens.github.io)
 
 ## Contents
 
-* :notebook: [Notebooks](notebooks/README.md)
+* :notebook: [Notebooks](setup/README.md)
 * :clipboard: [Slides](slides/README.md) (*under construction*)
 * :file_folder: [Datasets](data/README.md)
 * :bar_chart: [Projects](projects/README.md)
