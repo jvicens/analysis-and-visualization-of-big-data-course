@@ -1,8 +1,8 @@
 """Download or refresh the course datasets.
 
-    uv run python scripts/download_data.py snapshots   # refresh data/examples/*.parquet from the APIs
-    uv run python scripts/download_data.py bcn         # Barcelona districts and neighbourhoods into data/bcn/
-    uv run python scripts/download_data.py raw         # how to get full-resolution Catalan boundaries
+    uv run python scripts/download_data.py snapshots   # data/examples/*.parquet from the APIs
+    uv run python scripts/download_data.py bcn         # Barcelona boundaries into data/bcn/
+    uv run python scripts/download_data.py raw         # how to get full-resolution boundaries
 
 Run from the repository root. The committed snapshots are what the notebooks use offline
 (and in CI); this script documents exactly how each one was made.
@@ -43,9 +43,11 @@ def ckan(resource_id, page=10_000):
     """Download a CKAN (Open Data BCN) datastore resource, page by page."""
     frames, offset = [], 0
     while True:
-        r = requests.get(f"{CKAN}/datastore_search",
-                         params={"resource_id": resource_id, "limit": page, "offset": offset},
-                         timeout=300)
+        r = requests.get(
+            f"{CKAN}/datastore_search",
+            params={"resource_id": resource_id, "limit": page, "offset": offset},
+            timeout=300,
+        )
         r.raise_for_status()
         records = r.json()["result"]["records"]
         if not records:
@@ -63,11 +65,20 @@ def snapshots():
         "cooperatives.parquet": lambda: socrata("euku-fzbx"),
         "covid_vaccination_daily.parquet": lambda: socrata(
             "irki-p3c7",
-            {"$select": "data, dosi, sum(recompte) as dosis", "$group": "data, dosi", "$order": "data, dosi"}),
+            {
+                "$select": "data, dosi, sum(recompte) as dosis",
+                "$group": "data, dosi",
+                "$order": "data, dosi",
+            },
+        ),
         "covid_vaccination_daily_comarca.parquet": lambda: socrata(
             "irki-p3c7",
-            {"$select": "data, comarca_codi, comarca, sum(recompte) as dosis",
-             "$group": "data, comarca_codi, comarca", "$order": "data, comarca_codi"}),
+            {
+                "$select": "data, comarca_codi, comarca, sum(recompte) as dosis",
+                "$group": "data, comarca_codi, comarca",
+                "$order": "data, comarca_codi",
+            },
+        ),
         "bcn_accidents_2024.parquet": lambda: ckan("c78c2bf7-88a6-4db9-a1e9-429f0ce14e88"),
     }
     for name, fetch in jobs.items():
@@ -76,17 +87,21 @@ def snapshots():
         print(f"{name}: {len(df):,} rows")
 
 
-BCN_DATASET = "https://opendata-ajuntament.barcelona.cat/data/dataset/808daafa-d9ce-48c0-925a-fa5afdb1ed41"
+BCN_DATASET = (
+    "https://opendata-ajuntament.barcelona.cat/data/dataset/808daafa-d9ce-48c0-925a-fa5afdb1ed41"
+)
 BCN_FILES = {
     "districtes": f"{BCN_DATASET}/resource/5f8974a7-7937-4b50-acbc-89204d570df9/download",
     "barris": f"{BCN_DATASET}/resource/75197dfe-0306-4c5e-9643-34948af07fb6/download",
 }
-ICGC_PAGE = ("https://www.icgc.cat/ca/Geoinformacio-i-mapes/Dades-i-productes/"
-             "Geoinformacio-cartografica/Divisions-administratives")
+ICGC_PAGE = (
+    "https://www.icgc.cat/ca/Geoinformacio-i-mapes/Dades-i-productes/"
+    "Geoinformacio-cartografica/Divisions-administratives"
+)
 
 
 def bcn_boundaries():
-    """Barcelona districts and neighbourhoods (Open Data BCN, CC BY 4.0) as GeoJSON in EPSG:25831."""
+    """Barcelona districts and neighbourhoods (Open Data BCN, CC BY 4.0), EPSG:25831."""
     import geopandas as gpd
     from shapely import wkt
 

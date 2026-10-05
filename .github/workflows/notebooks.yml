@@ -1,0 +1,49 @@
+name: notebooks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  OFFLINE: "1"          # notebooks use the snapshots in data/ instead of the live APIs
+  MPLBACKEND: Agg
+
+jobs:
+  ubuntu-uv:
+    name: Ubuntu + uv
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - run: uv sync --frozen
+      - name: Notebooks are committed without outputs
+        run: uv run nbstripout --verify notebooks/*.ipynb notebooks/examples/*.ipynb
+      - run: uv run ruff check scripts
+      - name: Register the course kernel
+        run: uv run python -m ipykernel install --user --name ub-bigdata-viz --display-name "Python (ub-bigdata-viz)"
+      - name: Run every notebook top to bottom
+        run: uv run pytest --nbmake --nbmake-timeout=600 notebooks/*.ipynb notebooks/examples/*.ipynb
+
+  windows-conda:
+    name: Windows + conda (environment.yml)
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: conda-incubator/setup-miniconda@v4
+        with:
+          miniforge-version: latest
+          environment-file: setup/environment.yml
+          activate-environment: ub-bigdata-viz
+          conda-remove-defaults: "true"
+          auto-activate: false
+      - name: Register the course kernel
+        run: python -m ipykernel install --user --name ub-bigdata-viz --display-name "Python (ub-bigdata-viz)"
+      - run: python -m pip install pytest nbmake
+      - name: Setup check, pandas and maps notebooks
+        run: >
+          pytest --nbmake --nbmake-timeout=600
+          notebooks/00_setup_check.ipynb notebooks/01_pandas_basics.ipynb notebooks/08_geospatial_maps.ipynb

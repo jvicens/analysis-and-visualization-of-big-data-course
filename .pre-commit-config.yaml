@@ -1,0 +1,23 @@
+# Install once with:  uv run pre-commit install
+repos:
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.9.1
+    hooks:
+      - id: nbstripout          # notebooks are committed without outputs
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.10
+    hooks:
+      - id: ruff-check
+        files: ^scripts/
+      - id: ruff-format
+        files: ^scripts/
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        args: [--maxkb=5000]
+      - id: check-yaml
+      - id: end-of-file-fixer
+        exclude: \.(ipynb|geojson|json|csv)$

@@ -1,0 +1,18 @@
+# Rename this file to .gitignore when you copy the template into your repository.
+
+# Python / Jupyter
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# Environments and secrets
+.venv/
+.env
+
+# Data: keep raw downloads out of Git (document how to get them in the README)
+data/raw/
+data/cache/
+
+# OS
+.DS_Store
+Thumbs.db
