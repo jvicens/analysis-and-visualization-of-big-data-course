@@ -38,8 +38,11 @@ curl -LsSf https://astral.sh/uv/install.sh | sh          # macOS / Linux
 
 # in the repository folder
 uv sync                 # creates .venv with Python 3.12 and all packages
+uv run python -m ipykernel install --user --name ub-bigdata-viz --display-name "Python (ub-bigdata-viz)"
 uv run jupyter lab      # starts Jupyter inside that environment
 ```
+
+The second command registers the environment as the Jupyter kernel `ub-bigdata-viz`, the kernel every course notebook asks for. Run it once (and again if you move the repository).
 
 `uv sync` is also how you update after the repository changes. Add a package to your own project with `uv add <package>`.
 
@@ -113,6 +116,6 @@ VS Code, PyCharm and Spyder can use the same environment: select the interpreter
 |---|---|
 | `conda` not found (Windows) | Use the **Anaconda Prompt**, not the plain Command Prompt. |
 | Two condas installed (e.g. Navigator and Miniconda) | Keep one; uninstall the other, then repeat path B. |
-| `ModuleNotFoundError` in a notebook | The notebook runs on another kernel: pick `ub-bigdata-viz` / `.venv` in the top-right kernel menu. |
+| `ModuleNotFoundError` in a notebook | The notebook runs on another kernel: pick **Python (ub-bigdata-viz)** in the top-right kernel menu. If it is not listed, run the kernel registration command of your path again. |
 | GeoPandas or GDAL errors on Windows | Install with conda (path B), never with `pip install geopandas`. |
 | Paths with accents, spaces or OneDrive | Move the repository to `C:\Users\<you>\code\` and retry. |

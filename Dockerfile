@@ -8,7 +8,8 @@ ENV UV_PROJECT_ENVIRONMENT=/opt/venv \
 
 WORKDIR /opt/course
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev --no-install-project
+RUN uv sync --frozen --no-dev --no-install-project \
+    && python -m ipykernel install --sys-prefix --name ub-bigdata-viz --display-name "Python (ub-bigdata-viz)"
 
 RUN useradd --create-home student
 USER student

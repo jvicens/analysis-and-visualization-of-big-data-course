@@ -19,6 +19,7 @@ Refresh the API snapshots with `uv run python scripts/download_data.py snapshots
 | `icgc/*.json` | Catalonia, provinces, comarques (1:250,000) and municipalities (1:1,000,000), EPSG:4326 | [ICGC, Divisions administratives v2r1 (2025-07-30)](https://www.icgc.cat/ca/Geoinformacio-i-mapes/Dades-i-productes/Geoinformacio-cartografica/Divisions-administratives) | ICGC terms of use (attribution) | 2025-07-30 | 08 |
 | `bcn/districtes.geojson`, `bcn/barris.geojson` | Barcelona districts and neighbourhoods, EPSG:25831 | [Open Data BCN, administrative units](https://opendata-ajuntament.barcelona.cat/data/en/dataset/20170706-districtes-barris) | CC BY 4.0 | 2026-10-05 | 08 |
 | `carto/BCN500_0101S_LIMITE_ADM.*` | Spanish administrative boundaries (BCN500, 1:500,000) | [CNIG download centre](http://centrodedescargas.cnig.es/CentroDescargas/index.jsp) | CNIG terms of use (attribution) | 2023 | 08 |
+| `examples/fmri.csv` | fMRI signal by region and event (seaborn example dataset) | [mwaskom/seaborn-data](https://github.com/mwaskom/seaborn-data) (Waskom et al.) | Distributed with seaborn's examples | 2026-10-05 | 07 |
 | `ds-codigos-postales-master/data/*.geojson` | Postal-code areas of the four Catalan provinces | [inigoflores/ds-codigos-postales](https://github.com/inigoflores/ds-codigos-postales) (from CNIG) | No licence file; CNIG source | 2023 | 07, 08 |
 
 Full-resolution boundaries are not committed: `uv run python scripts/download_data.py raw` explains how to get them into `data/raw/` (git-ignored).
