@@ -1,59 +1,73 @@
 #!/usr/bin/env bash
 # ============================================================
-#  UB Big Data & Visualization - Linux/macOS Miniconda Setup
-#  Creates a conda env 'ub-bigdata-viz' (Python 3.11)
-#  Installs Jupyter + data/plotting libraries (incl. GeoPandas)
+#  Analysis and Visualization of Big Data — conda setup (macOS / Linux)
+#  Creates or updates the conda environment 'ub-bigdata-viz' from
+#  setup/environment.yml and registers it as a Jupyter kernel.
+#  Works with Miniconda, Anaconda and Miniforge. Does not change your
+#  global conda configuration.
+#
+#  Run from the repository root:   bash setup/install_env.sh
 # ============================================================
+set -euo pipefail
 
-source "$HOME/miniconda3/etc/profile.d/conda.sh"
-set -e  # stop if any command fails
+ENV_NAME="${AVBD_ENV_NAME:-ub-bigdata-viz}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ENV_FILE="$SCRIPT_DIR/environment.yml"
 
-echo "=== Checking conda installation ==="
-if ! command -v conda &> /dev/null
-then
-  echo "[ERROR] Conda not found. Please install Miniconda or Anaconda first:"
-  echo "https://docs.conda.io/projects/conda/en/latest/user-guide/install/"
+fail() {
+  echo
+  echo "[ERROR] $1"
+  echo "If you cannot solve it, copy this whole window and send it to the teacher."
   exit 1
+}
+
+echo "=== 1/4 Looking for conda ==="
+if ! command -v conda >/dev/null 2>&1; then
+  for base in "$HOME/miniconda3" "$HOME/anaconda3" "$HOME/miniforge3" "/opt/anaconda3" "/opt/miniconda3"; do
+    if [[ -f "$base/etc/profile.d/conda.sh" ]]; then
+      # shellcheck disable=SC1091
+      source "$base/etc/profile.d/conda.sh"
+      break
+    fi
+  done
+fi
+command -v conda >/dev/null 2>&1 || fail "conda was not found. Install Miniconda (or use the uv path in setup/README.md)."
+
+CONDA_BASE="$(conda info --base)"
+echo "Using conda at: $CONDA_BASE"
+
+found=()
+for base in "$HOME/miniconda3" "$HOME/anaconda3" "$HOME/miniforge3" "/opt/anaconda3" "/opt/miniconda3"; do
+  [[ -x "$base/bin/conda" ]] && found+=("$base")
+done
+if (( ${#found[@]} > 1 )); then
+  echo "[WARNING] More than one conda installation found: ${found[*]}"
+  echo "          Keep only one. This script uses: $CONDA_BASE"
 fi
 
-echo "=== Accepting ToS conda channels ==="
+# shellcheck disable=SC1091
+source "$CONDA_BASE/etc/profile.d/conda.sh"
 
-conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
-conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
-
-
-echo "=== Updating conda base ==="
-conda update -n base -c defaults conda -y
-
-
-echo "=== Creating environment 'ub-bigdata-viz' with Python 3.11 ==="
-conda create -n ub-bigdata-viz python=3.11 -y
-
-echo "=== Activating environment ==="
-# Activate environment within the script
-source "$(conda info --base)/etc/profile.d/conda.sh"
-conda activate ub-bigdata-viz
-
-echo "=== Ensuring conda-forge channel priority ==="
-conda config --add channels conda-forge
-conda config --set channel_priority strict
-
-if [[ -f "environment.yml" ]]; then
-  echo "=== Installing packages from environment.yml ==="
-  conda env update -n ub-bigdata-viz -f environment.yml
+echo "=== 2/4 Creating or updating '$ENV_NAME' (this can take several minutes) ==="
+if conda env list | awk '{print $1}' | grep -qx "$ENV_NAME"; then
+  conda env update -n "$ENV_NAME" -f "$ENV_FILE" --prune || fail "Could not update the environment."
 else
-  echo "=== Installing default packages directly ==="
-  conda install -n ub-bigdata-viz jupyterlab ipykernel numpy pandas matplotlib seaborn scipy openpyxl plotly geopandas fiona shapely pyproj rtree -y
-  pip install ydata-profiling sodapy pandas-bokeh
+  conda env create -n "$ENV_NAME" -f "$ENV_FILE" || fail "Could not create the environment."
 fi
 
-echo "=== Registering kernel for Jupyter ==="
-python -m ipykernel install --user --name ub-bigdata-viz --display-name "Python (ub-bigdata-viz)"
+echo "=== 3/4 Registering the Jupyter kernel ==="
+conda activate "$ENV_NAME"
+python -m ipykernel install --user --name "$ENV_NAME" --display-name "Python ($ENV_NAME)" \
+  || fail "Could not register the Jupyter kernel."
+
+echo "=== 4/4 Quick check ==="
+python -c "import pandas, geopandas, matplotlib; print('pandas', pandas.__version__, '| geopandas', geopandas.__version__)" \
+  || fail "The libraries do not import."
 
 echo
 echo "======================================================="
-echo " Setup complete!"
-echo " To start working, open a terminal and run:"
-echo "     conda activate ub-bigdata-viz"
+echo " Setup complete. Every time you work on the course:"
+echo "     conda activate $ENV_NAME"
 echo "     jupyter lab"
+echo " Then open notebooks/00_setup_check.ipynb and run all cells."
 echo "======================================================="

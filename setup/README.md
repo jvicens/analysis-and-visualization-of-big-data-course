@@ -1,205 +1,118 @@
-# Setup the working environment
+# Set up your working environment
 
-## Table of Contents
-1. [Software requirements](#software-requirements)
-2. [Setting up your working environment](#setting-up-your-working-environment-a-namesea)
-   1. [Install Python and pip](#install-python-and-pip3)
-   2. [Create a virtual environment](#create-a-virtual-environment)
-      1. [virtualenv](#virtualenv)
-      2. [conda](#conda)
-      3. [Additional Tips](#additional-tips)
-   3. [Automated setup scripts (.bat/.sh)](#Automated-Setup-Scripts)
-   4. [Docker](#docker)
+You need **one** Python environment for the course, with Python 3.12, pandas 3 and the geospatial stack (GeoPandas). Choose **one** of the three paths below, then check it with `notebooks/00_setup_check.ipynb`.
 
-## Software requirements 
+| Your situation | Use |
+|---|---|
+| macOS or Linux, no conda installed | **A. uv** (recommended) |
+| Windows, or you already have Anaconda / Miniconda / Anaconda Navigator | **B. conda** |
+| Nothing works, or you prefer containers | **C. Docker** |
 
-* Python 3.11 or higher
-* Essential Python packages in `requirements.txt`
-  * [geopandas](https://geopandas.org/)
-  * [numpy](https://numpy.org/)
-  * [matplotlib](https://matplotlib.org/)
-  * [pandas](https://pandas.pydata.org/)
-  * [scipy](https://scipy.org/)
-  * [sodapy](https://github.com/xmunoz/sodapy)
-* Jupyter Notebooks or Jupyter Lab
-  * [Installing Jupyter](https://jupyter.org/install)
+> **Already have Anaconda, Miniconda or Anaconda Navigator? Do not install a second conda.** Two condas on the same computer were the most common setup problem last year. Use path B with the conda you already have.
 
-## Setting up your working environment
+Environment name used everywhere in the course: **`ub-bigdata-viz`**.
 
-### Install Python and pip3
-Check Python version installed:
-```console
-python3 --version
-```
-In case you do not have a version of Python installed, you can do it following in this way:
+## 0. Get the course repository
 
-Linux
-```console
-sudo apt-get update 
-sudo apt-get install python3
-```
+Install Git if needed (`git --version` to check):
 
-MacOS
-```console
-brew install python3
-```
+- macOS: `xcode-select --install` or `brew install git`
+- Linux: `sudo apt-get install git`
+- Windows: install [Git for Windows](https://git-scm.com/download/win) (you also need it for `04_git_and_github.ipynb`)
 
-Check pip3 is installed:
-```console
-command -v pip3
-```
-
-In principle is MacOS pip3 is installed by default with Python, in Linux you need to install it manually:
-```console
-sudo apt-get install python3-pip
-sudo apt-get update 
-```
-
-### Create a Virtual Environment
-Virtual environments ensures package dependencies don't interfere with your systems libraries or base environments.
-Then can install the appropriated libraries by using the file `requirements.txt containing the Python packages to install, 
-
-#### virtualenv
-
-Check if `virtualenv` is installed:
+Then clone the repository in a folder **without accents or spaces in the path** and, on Windows, **outside OneDrive-synced folders** (e.g. `C:\Users\<you>\code\`):
 
 ```console
-virtualenv –-version
+git clone https://github.com/jvicens/analysis-and-visualization-of-big-data-course.git
+cd analysis-and-visualization-of-big-data-course
 ```
 
-In case the library is not installed in your systems:
+## A. uv (recommended on macOS / Linux)
 
-Linux
-```console
-sudo apt-get install python3-venv 
-```
-
-MacOS
-```console
-python3 -m pip install --user virtualenv
-```
-
-#### Setting up your virtual environment
-
-Via terminal move to the root directory in your repository and create the environment:
+[uv](https://docs.astral.sh/uv/) installs Python and all packages from `pyproject.toml` and `uv.lock`, so everybody gets the same versions.
 
 ```console
-python3 -m venv <name_virtual_environment>
+# install uv once
+curl -LsSf https://astral.sh/uv/install.sh | sh          # macOS / Linux
+# powershell -c "irm https://astral.sh/uv/install.ps1 | iex"   # Windows
+
+# in the repository folder
+uv sync                 # creates .venv with Python 3.12 and all packages
+uv run jupyter lab      # starts Jupyter inside that environment
 ```
-It creates the venv in the root of your repository. This venv has to be added into `.gitignore` file to avoid commit the
-environment.
+
+`uv sync` is also how you update after the repository changes. Add a package to your own project with `uv add <package>`.
+
+## B. conda (Windows, or if you already have conda)
+
+All conda paths read the same file, `setup/environment.yml`, and create the environment `ub-bigdata-viz` from the conda-forge channel (this is what makes GeoPandas install cleanly on Windows).
+
+### B1. Script — macOS / Linux
 
 ```console
-source <name_virtual_environment>/bin/activate
+bash setup/install_env.sh
 ```
 
-Install the requirements, running the following command: 
+### B2. Script — Windows, Anaconda Prompt
+
+1. Open **Anaconda Prompt** from the Start menu.
+2. `cd` to the repository folder, e.g. `cd %USERPROFILE%\code\analysis-and-visualization-of-big-data-course`
+3. Run `setup\install_env.bat`
+
+### B3. Script — Windows PowerShell
+
+Only if conda already works in PowerShell (otherwise run `conda init powershell` once from the Anaconda Prompt and open a new PowerShell):
+
 ```console
-pip3 install -r requirements.txt
+powershell -ExecutionPolicy Bypass -File setup\install_env.ps1
 ```
 
-Create a Kernel for Jupyter Notebooks
-```
-ipython kernel install --name <name_kernel> --user
-```
+### B4. Anaconda Navigator (no command line)
 
-#### Conda
+1. Open **Anaconda Navigator** → **Environments** → **Import**.
+2. Choose **Local drive** and select `setup/environment.yml` from the repository folder.
+3. Name: `ub-bigdata-viz` → **Import**. Wait until it finishes (several minutes).
+4. Select `ub-bigdata-viz` in the list, go to **Home** and **Launch JupyterLab** (install it there if Navigator asks).
 
-Before proceeding, ensure you have the following installed:
-- **Anaconda** or **Miniconda** installed on your Windows / MacOs / Linux machine. You can download:
-  - [Anaconda](https://www.anaconda.com/products/individual)
-  - [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
+### B5. By hand (any OS)
 
-Check if Conda is installed. This should display the Conda version installed on your system:
-```bash
-conda --version
-```
-Once Conda is installed you can create a new conda environment.
-```
-conda create --name <name_virtual_environment> python=3.10
-```
-Once the environment is created you can activate it using:
-```
-conda activate <name_virtual_environment>
-```
-To deactivate the environment later you can run:
-```
-conda deactivate
-```
-Install the requirements:
 ```console
-conda install --file requirements.txt
-```
-In case some libraries are not found in Conda add new channels, specially conda-forge that contains the most recent
-scientific libraries `conda config --add channels conda-forge`
-
-
-In the exceptional case that some packages are not available via Conda (i.e., they are only available via pip), you can combine both. 
-First, install what Conda can handle and then:
-```
-pip install -r requirements.txt
-```
-
-
-Once you have all the environment set up create a Kernel for Jupyter Notebooks
-```
-ipython kernel install --name <name_kernel> --user
-```
-
-#### Additional tips
-
-- With `virtualenv` you can create and independent virtual environment: `mkvirtualenv <name_virtual_environment>`
-- List all virtual environments installed: `lsvirtualenv -b` or `conda list`
-- There is no way to remove a virtual environment with a command. The only way to do it is `sudo rm -rf <name_virtual_environment>` or in the case of conda `conda remove --name <name_virtual_environment> --all`
-- Delete a Kernel with this command: `jupyter kernelspec remove old_kernel`
-- Save the list of installed packages in an environment with: `pip freeze > requirements.txt` or `conda env export > environment.yml`
-- Create an environment from the `environment.yml` file, use: `conda env create -f environment.yml`
-
-### Automated Setup Scripts
-
-The .bat file contains a series of commands written in plain text that Windows executes line by line when you 
-double-click the file or run it from the command prompt.
-
-The file `install_env.bat` automates the environment setup for students on Windows with Miniconda.
-It performs the following steps:
-
-1. Checks that conda is installed and available.
-2. Updates Conda (optional).
-3. Creates the environment named `ub-avbd` with Python 3.11.
-4. Installs all dependencies from `environment.yml`.
-5. Registers the environment as a Jupyter kernel named `Python (ub-avbd)`.
-6. Prints instructions to start Jupyter Lab:
-```
-conda activate ub-avbd
+conda env create -f setup/environment.yml
+conda activate ub-bigdata-viz
+python -m ipykernel install --user --name ub-bigdata-viz --display-name "Python (ub-bigdata-viz)"
 jupyter lab
 ```
 
-Same procedure is followed by Linux/Mac users but using the file `install_env.sh`.
-1. Save it in your course root
-2. Then make it executable, in case is not:
-```
-chmod +x install_env.sh
-```
-3. and run it:
-```
-./install_env.sh
+After the repository changes: `conda env update -f setup/environment.yml --prune`.
+
+## C. Docker
+
+```console
+docker build -t avbd .
+docker run --rm -p 8888:8888 -v "$(pwd)":/home/student/course avbd
 ```
 
-### Docker
+Open the `http://127.0.0.1:8888/lab?token=...` link printed in the terminal. Your files stay in the repository folder on your computer.
 
-Previously install docker following the [instructions](https://docs.docker.com/engine/install/).
+## Check your setup
 
-#### Build and Run the Docker Container
+1. Start Jupyter **from your environment** (`uv run jupyter lab`, or `conda activate ub-bigdata-viz` then `jupyter lab`, or Navigator with `ub-bigdata-viz` selected).
+2. Open `notebooks/00_setup_check.ipynb` and run all cells (**Run → Run All Cells**).
+3. Every line should show ✅. If not, the last cell tells you what to send to the teacher.
 
-1. Build the Docker image: In the directory where your Dockerfile is located, run:
-```
-docker build -t jupyter-venv .
-```
-2. Run the Docker container:
-```
-docker run -p 8888:8888 -v $(pwd):/home/jupyter jupyter-venv
-```
-This will map port 8888 on your host to the Jupyter notebook running in the Docker container and mount the current directory into the container’s /home/jupyter.
+## IDEs
 
-3. Access Jupyter Notebook: Open your browser and go to: `http://localhost:8888`
+VS Code, PyCharm and Spyder can use the same environment: select the interpreter `.venv` (uv) or `ub-bigdata-viz` (conda) as the notebook kernel.
 
+- [Jupyter kernels in VS Code](https://code.visualstudio.com/docs/datascience/jupyter-kernel-management)
+- [Jupyter notebooks in PyCharm](https://www.jetbrains.com/help/pycharm/jupyter-notebook-support.html)
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| `conda` not found (Windows) | Use the **Anaconda Prompt**, not the plain Command Prompt. |
+| Two condas installed (e.g. Navigator and Miniconda) | Keep one; uninstall the other, then repeat path B. |
+| `ModuleNotFoundError` in a notebook | The notebook runs on another kernel: pick `ub-bigdata-viz` / `.venv` in the top-right kernel menu. |
+| GeoPandas or GDAL errors on Windows | Install with conda (path B), never with `pip install geopandas`. |
+| Paths with accents, spaces or OneDrive | Move the repository to `C:\Users\<you>\code\` and retry. |

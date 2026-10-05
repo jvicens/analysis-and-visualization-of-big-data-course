@@ -1,64 +1,20 @@
-# Base image with Python and Jupyter
-FROM python:3.11-slim
+FROM python:3.12-slim
 
-# Set environment variables
-ENV VIRTUAL_ENV=/opt/venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-# Install required system dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    gdal-bin \
-    libgdal-dev \
-    python3-gdal \
-    libgeos-dev \
-    libproj-dev \
-    && rm -rf /var/lib/apt/lists/*
+ENV UV_PROJECT_ENVIRONMENT=/opt/venv \
+    UV_LINK_MODE=copy \
+    PATH="/opt/venv/bin:$PATH"
 
-# Create virtual environment
-RUN python3 -m venv $VIRTUAL_ENV
+WORKDIR /opt/course
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev --no-install-project
 
-# Install Jupyter in the virtual environment
-RUN pip install --upgrade pip && \
-    pip install jupyter ipykernel jupyterlab
+RUN useradd --create-home student
+USER student
+WORKDIR /home/student/course
 
-# Copy requirements file to the container
-COPY requirements.txt .
-
-# Install Python dependencies in the virtual environment
-RUN pip install -r requirements.txt
-
-# Create a custom Jupyter kernel using the virtual environment
-RUN python -m ipykernel install --user --name=ub_kernel --display-name "Python (UB)"
-
-# Expose the default Jupyter Notebook port
 EXPOSE 8888
 
-# Set working directory for notebooks
-WORKDIR /home/jupyter
-
-# Copy all content (e.g., notebooks) to the container
-COPY . .
-
-# Remove existing Jupyter config if present (to avoid conflicts)
-RUN rm -rf ~/.jupyter
-
-# Generate Jupyter configuration file
-RUN jupyter server --generate-config
-
-# Set up a password for Jupyter Lab
-RUN python -c "from jupyter_server.auth import set_password; set_password('jupyter')"
-
-# Configure Jupyter
-RUN echo "c.ServerApp.allow_origin = '*'" >> ~/.jupyter/jupyter_server_config.py && \
-    echo "c.ServerApp.allow_remote_access = True" >> ~/.jupyter/jupyter_server_config.py
-
-# Disable token and password authentication by directly setting the config file
-# RUN echo "c.IdentityProvider.token = ''" >> ~/.jupyter/jupyter_server_config.py && \
-#    echo "c.ServerApp.password = ''" >> ~/.jupyter/jupyter_server_config.py && \
-#    echo "c.ServerApp.allow_origin = '*'" >> ~/.jupyter/jupyter_server_config.py && \
-#    echo "c.ServerApp.allow_remote_access = True" >> ~/.jupyter/jupyter_server_config.py && \
-#    echo "c.ServerApp.disable_check_xsrf = True" >> ~/.jupyter/jupyter_server_config.py
-
-# Run Jupyter Lab
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
+# Token authentication: open the http://127.0.0.1:8888/lab?token=... link printed at start-up.
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser"]

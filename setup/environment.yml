@@ -1,24 +1,31 @@
+# Conda environment for the course (Windows, or anyone who already has Anaconda/Miniconda).
+# Same packages as pyproject.toml. "nodefaults" keeps conda off the Anaconda channels,
+# so no Terms of Service prompt and no mixing of channels for the geospatial stack.
+#
+#   conda env create -f setup/environment.yml      (first time)
+#   conda env update -f setup/environment.yml --prune   (after the file changes)
 name: ub-bigdata-viz
 channels:
   - conda-forge
+  - nodefaults
 dependencies:
-  - python=3.11
+  - python=3.12
+  - pandas>=3.0
+  - numpy>=2.1
+  - matplotlib>=3.10
+  - seaborn>=0.13
+  - scipy>=1.14
+  - geopandas>=1.1
+  - pyogrio>=0.10
+  - shapely>=2.1
+  - pyarrow>=18
+  - plotly>=6
+  - bokeh>=3.6
+  - jupyterlab>=4.3
+  - ipykernel>=6.29
+  - openpyxl>=3.1
+  - requests>=2.32
+  - python-dotenv>=1.0
   - pip
-  - jupyterlab
-  - ipykernel
-  - numpy
-  - pandas
-  - matplotlib
-  - seaborn
-  - scipy
-  - openpyxl
-  - plotly
-  - geopandas
-  - fiona
-  - shapely
-  - pyproj
-  - rtree
   - pip:
-      - ydata-profiling
-      - sodapy
-      - pandas-bokeh
+      - sodapy>=2.2
