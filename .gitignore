@@ -19,3 +19,6 @@ Thumbs.db
 
 # Full-resolution downloads (scripts/download_data.py)
 data/raw/
+
+# Exercise solutions live only on the private 'solutions' branch (see tools/README there)
+solutions/
