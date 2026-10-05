@@ -20,4 +20,4 @@ repos:
         args: [--maxkb=5000]
       - id: check-yaml
       - id: end-of-file-fixer
-        exclude: \.(ipynb|geojson|json|csv)$
+        exclude: ^data/|\.ipynb$

@@ -24,4 +24,3 @@ This repository contains links to the project repositories delivered by students
 - [Social Factors in Spanish General Elections](https://github.com/gomgoma/2023-BigDataVisualization)
 
 Feel free to explore the repositories to review past projects and gain insights into the work completed by students in previous years.
-
