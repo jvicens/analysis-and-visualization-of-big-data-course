@@ -23,7 +23,8 @@ CKAN = "https://opendata-ajuntament.barcelona.cat/data/api/action"
 
 def socrata(dataset_id, params=None, page=50_000):
     """Download a Socrata (Transparència Catalunya) dataset as CSV, page by page."""
-    params = dict(params or {})
+    # Without a stable order, pages can overlap: rows appear twice and others go missing
+    params = {"$order": ":id", **(params or {})}
     frames, offset = [], 0
     while True:
         query = {**params, "$limit": page, "$offset": offset}
@@ -58,12 +59,10 @@ def ckan(resource_id, page=10_000):
 
 
 def snapshots():
-    out = DATA / "examples"
-    out.mkdir(parents=True, exist_ok=True)
     jobs = {
-        "energy_consumption_municipalities.parquet": lambda: socrata("8idm-becu"),
-        "cooperatives.parquet": lambda: socrata("euku-fzbx"),
-        "covid_vaccination_daily.parquet": lambda: socrata(
+        "examples/energy_consumption_municipalities.parquet": lambda: socrata("8idm-becu"),
+        "examples/cooperatives.parquet": lambda: socrata("euku-fzbx"),
+        "examples/covid_vaccination_daily.parquet": lambda: socrata(
             "irki-p3c7",
             {
                 "$select": "data, dosi, sum(recompte) as dosis",
@@ -71,7 +70,7 @@ def snapshots():
                 "$order": "data, dosi",
             },
         ),
-        "covid_vaccination_daily_comarca.parquet": lambda: socrata(
+        "examples/covid_vaccination_daily_comarca.parquet": lambda: socrata(
             "irki-p3c7",
             {
                 "$select": "data, comarca_codi, comarca, sum(recompte) as dosis",
@@ -79,11 +78,13 @@ def snapshots():
                 "$order": "data, comarca_codi",
             },
         ),
-        "bcn_accidents_2024.parquet": lambda: ckan("c78c2bf7-88a6-4db9-a1e9-429f0ce14e88"),
+        "examples/bcn_accidents_2024.parquet": lambda: ckan("c78c2bf7-88a6-4db9-a1e9-429f0ce14e88"),
+        "education/school_places.parquet": lambda: socrata("99md-r3rq"),
     }
     for name, fetch in jobs.items():
         df = fetch()
-        df.to_parquet(out / name, index=False)
+        (DATA / name).parent.mkdir(parents=True, exist_ok=True)
+        df.to_parquet(DATA / name, index=False)
         print(f"{name}: {len(df):,} rows")
 
 
