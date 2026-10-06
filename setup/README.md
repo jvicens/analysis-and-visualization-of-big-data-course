@@ -8,7 +8,7 @@ You need **one** Python environment for the course, with Python 3.12, pandas 3 a
 | Windows, or you already have Anaconda / Miniconda / Anaconda Navigator | **B. conda** |
 | Nothing works, or you prefer containers | **C. Docker** |
 
-> **Already have Anaconda, Miniconda or Anaconda Navigator? Do not install a second conda.** Two condas on the same computer were the most common setup problem last year. Use path B with the conda you already have.
+> **Already have Anaconda, Miniconda or Anaconda Navigator? Do not install a second conda.** Two condas on the same computer were the most common setup problem. Use path B with the conda you already have.
 
 Environment name used everywhere in the course: **`ub-bigdata-viz`**.
 
