@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.3
       - run: uv sync --frozen
       - name: Notebooks are committed without outputs
         run: uv run nbstripout --verify notebooks/*.ipynb notebooks/examples/*.ipynb
